@@ -1,14 +1,11 @@
 "use strict";
 
+import { setBadgeText } from "./common";
+
 console.log("Hello, world from popup!")
 
-function setBadgeText(enabled) {
-    const text = enabled ? "ON" : "OFF"
-    void chrome.action.setBadgeText({text: text})
-}
-
 // Handle the ON/OFF switch
-const checkbox = document.getElementById("enabled")
+const checkbox = document.getElementById("enabled") as HTMLInputElement
 chrome.storage.sync.get("enabled", (data) => {
     checkbox.checked = !!data.enabled
     void setBadgeText(data.enabled)
@@ -21,7 +18,7 @@ checkbox.addEventListener("change", (event) => {
 })
 
 // Handle the input field
-const input = document.getElementById("item")
+const input = document.getElementById("item") as HTMLInputElement
 chrome.storage.sync.get("item", (data) => {
     input.value = data.item || ""
 });
