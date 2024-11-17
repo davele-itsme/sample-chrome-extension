@@ -1,0 +1,33 @@
+{
+  "name": "chrome-extension",
+  "version": "0.1.0",
+  "description": "My first chrome extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "webpack serve --config webpack.dev.js",
+    "dev": "npm run start",
+    "build": "webpack --config webpack.prod.js",
+    "build:dev": "webpack --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davele-itsme/sample-chrome-extension.git"
+  },
+  "keywords": [
+    "chromeextension"
+  ],
+  "author": "David Le",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davele-itsme/sample-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/davele-itsme/sample-chrome-extension#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^6.0.1"
+  }
+}
