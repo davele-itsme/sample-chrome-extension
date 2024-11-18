@@ -1,3 +1,5 @@
+import { Message, StoredConfig } from "./common"
+
 const BLUR_FILTER = "blur(6px)"
 let textToBlur = ""
 
@@ -63,21 +65,25 @@ function observe() {
   }
 }
 
-chrome.storage.sync.get(storageKeys, ({ enabled, item }) => {
+chrome.storage.sync.get(storageKeys, (data) => {
+  const config = data as StoredConfig
   if (enabled === false) {
     enabled = false
   }
-  if (item) {
-    textToBlur = item
+  if (config.item) {
+    textToBlur = config.item
   }
-  observe()
+  if (enabled) {
+    observe()
+  }
 })
 
 // Listen for messages from popup.
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.enabled !== undefined) {
-    console.log("Received message from sender %s", sender.id, request)
-    enabled = request.isEnabled
+  const message = request as Message
+  if (message.enabled !== undefined) {
+    console.log("Received message from sender %s", sender.id, message)
+    enabled = message.enabled
     if (enabled) {
       observe()
     } else {
