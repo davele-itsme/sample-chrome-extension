@@ -2,10 +2,10 @@ name: Lint check, format check, and build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches: ["main"]
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
@@ -28,12 +28,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install --no-save          
+          npm install --no-save
 
       - name: Format check and lint
         run: |
           npm run format-check
-          npm run lint          
+          npm run lint
 
       - name: Build
         run: |
