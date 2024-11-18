@@ -30,7 +30,7 @@ function processNode(node: Node) {
 function blurElement(elem: HTMLElement) {
   elem.style.filter = BLUR_FILTER
   console.debug(
-    `blurred id: ${elem.id} class: ${elem.className} tag: ${elem.tagName} text: ${elem.textContent}`,
+    `blurred id: ${elem.id} class: ${elem.className} tag: ${elem.tagName} text: ${elem.textContent ?? ""}`,
   )
 }
 
@@ -67,7 +67,7 @@ function observe() {
 
 chrome.storage.sync.get(storageKeys, (data) => {
   const config = data as StoredConfig
-  if (enabled === false) {
+  if (config.enabled === false) {
     enabled = false
   }
   if (config.item) {

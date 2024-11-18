@@ -7,19 +7,22 @@ const checkbox = document.getElementById("enabled") as HTMLInputElement
 chrome.storage.sync.get("enabled", (data) => {
   const config = data as StoredConfig
   checkbox.checked = !!config.enabled
-  void setBadgeText(!!config.enabled)
+  setBadgeText(!!config.enabled)
 })
 checkbox.addEventListener("change", (event) => {
   if (event.target instanceof HTMLInputElement) {
     void chrome.storage.sync.set({ enabled: event.target.checked })
-    void setBadgeText(event.target.checked)
+    setBadgeText(event.target.checked)
     const message: Message = { enabled: event.target.checked }
     chrome.tabs
       .query({})
       .then((tabs) => {
         for (const tab of tabs) {
+          if (tab.id === undefined) {
+            continue
+          }
           chrome.tabs
-            .sendMessage(tab.id!, message)
+            .sendMessage(tab.id, message)
             .then((response) => {
               const tabInfo = response as TabInfo
               console.info(
@@ -28,7 +31,7 @@ checkbox.addEventListener("change", (event) => {
                 tabInfo.url,
               )
             })
-            .catch((error) => {
+            .catch((error: unknown) => {
               console.warn(
                 "Popup could not send message to tab %d",
                 tab.id,
@@ -37,7 +40,7 @@ checkbox.addEventListener("change", (event) => {
             })
         }
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error("Popup could not query the tabs", error)
       })
   }
